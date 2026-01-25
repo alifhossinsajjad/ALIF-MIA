@@ -5,12 +5,12 @@ import { motion, AnimatePresence } from "framer-motion";
 const projects = [
   {
     id: 1,
-    title: "Car Renter",
-    description: "A Full-Stack Car Renter Platform ",
-    image: "/projects/project1.png",
-    tags: ["React", "TailwindCSS", "Mongodb", "Express", "Node.js"],
-    demoUrl: "https://simple-firebase-authenti-d2c26.firebaseapp.com/",
-    githubUrl: "https://github.com/alifhossinsajjad/CarRental-Client-Side",
+    title: "Chef Corner",
+    description: "A Full-Stack Chef Corner Platform",
+    image: "/public/projects/project4.png",
+    tags: ["React", "TailwindCSS", "Mongodb","Stripe", "Express", "Node.js"],
+    demoUrl: "https://chef-bazzer.web.app/",
+    githubUrl: "https://github.com/alifhossinsajjad/Chef-Bazzer-Client",
   },
   {
     id: 2,
@@ -24,36 +24,18 @@ const projects = [
   },
   {
     id: 3,
-    title: "Home Decorate With Plant",
+    title: "Car Rentel",
     description:
       "Full-featured e-commerce platform with user authentication",
-    image: "/projects/project3.png",
+    image: "/public/projects/project1.png",
     tags: ["React", "Node.js", "Firebase", "MongoDB", "FirebaseAuthToken"],
-    demoUrl: "https://green-nest-five.vercel.app/",
-    githubUrl: "https://github.com/alifhossinsajjad/GreenNest",
-  },
-  // Duplicated projects for pagination demo
-  {
-    id: 4,
-    title: "Car Renter V2",
-    description: "Advanced version with AI recommendations",
-    image: "/projects/project1.png",
-    tags: ["React", "TailwindCSS", "Mongodb", "AI"],
-    demoUrl: "https://simple-firebase-authenti-d2c26.firebaseapp.com/",
+    demoUrl: "https://car-rental-8fde9.web.app/",
     githubUrl: "https://github.com/alifhossinsajjad/CarRental-Client-Side",
   },
+  // Duplicated projects for pagination demo
+ 
   {
-    id: 5,
-    title: "Event Hub Pro",
-    description:
-      "Enterprise grade event management system",
-    image: "/projects/project2.png",
-    tags: ["Next.js", "PostgreSQL", "Redis"],
-    demoUrl: "https://event-hub-client-zeta.vercel.app/",
-    githubUrl: "https://github.com/alifhossinsajjad/Event-Hub-Client",
-  },
-  {
-    id: 6,
+    id: 4,
     title: "Green Nest Mobile",
     description:
       "Mobile application for the plant store",
