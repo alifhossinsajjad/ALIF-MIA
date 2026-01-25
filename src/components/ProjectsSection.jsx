@@ -7,7 +7,7 @@ const projects = [
     id: 1,
     title: "Chef Corner",
     description: "A Full-Stack Chef Corner Platform",
-    image: "/public/projects/project4.png",
+    image: "/projects/project4.png",
     tags: ["React", "TailwindCSS", "Mongodb","Stripe", "Express", "Node.js"],
     demoUrl: "https://chef-bazzer.web.app/",
     githubUrl: "https://github.com/alifhossinsajjad/Chef-Bazzer-Client",
@@ -27,7 +27,7 @@ const projects = [
     title: "Car Rentel",
     description:
       "Full-featured e-commerce platform with user authentication",
-    image: "/public/projects/project1.png",
+    image: "/projects/project1.png",
     tags: ["React", "Node.js", "Firebase", "MongoDB", "FirebaseAuthToken"],
     demoUrl: "https://car-rental-8fde9.web.app/",
     githubUrl: "https://github.com/alifhossinsajjad/CarRental-Client-Side",
