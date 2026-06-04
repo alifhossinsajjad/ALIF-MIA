@@ -2,7 +2,7 @@ import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
-export const ThemeToggle = () => {
+export const ThemeToggle = ({ inline = false, size }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
@@ -28,18 +28,32 @@ export const ThemeToggle = () => {
     }
   };
 
+  if (inline) {
+    return (
+      <button
+        onClick={toggleTheme}
+        className="p-1.5 rounded-full hover:bg-secondary/60 transition-colors duration-200 cursor-pointer"
+        aria-label="Toggle theme"
+      >
+        {isDarkMode ? (
+          <Sun size={size} className="text-yellow-400" />
+        ) : (
+          <Moon size={size} className="text-slate-400" />
+        )}
+      </button>
+    );
+  }
+
+  // Fallback: fixed floating button (used only if placed standalone)
   return (
     <button
       onClick={toggleTheme}
-      className={cn(
-        "fixed max-sm:hidden top-5 right-5 z-50 p-2 rounded-full transition-colors duration-300",
-        "focus:outlin-hidden"
-      )}
+      className="fixed top-5 right-5 z-50 p-2 rounded-full transition-colors duration-300 focus:outline-none "
     >
       {isDarkMode ? (
-        <Sun className="h-6 w-6 text-yellow-300" />
+        <Sun className="h-5 w-5 text-yellow-300 " />
       ) : (
-        <Moon className="h-6 w-6 text-blue-900" />
+        <Moon className="h-5 w-5 text-blue-900 " />
       )}
     </button>
   );

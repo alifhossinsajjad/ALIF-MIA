@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import heroImg from "../assets/logo.png";
 import { ArrowDown, Mail } from "lucide-react";
 
-
 export const HeroSection = () => {
   return (
     <section
