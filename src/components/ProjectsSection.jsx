@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ArrowRight, ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   {
@@ -8,15 +12,14 @@ const projects = [
     title: "Chef Corner",
     description: "A Full-Stack Chef Corner Platform",
     image: "/projects/project4.png",
-    tags: ["React", "TailwindCSS", "Mongodb","Stripe", "Express", "Node.js"],
+    tags: ["React", "TailwindCSS", "Mongodb", "Stripe", "Express", "Node.js"],
     demoUrl: "https://chef-bazzer.web.app/",
     githubUrl: "https://github.com/alifhossinsajjad/Chef-Bazzer-Client",
   },
   {
     id: 2,
     title: "Event Hub",
-    description:
-      "A Event Hub Management Web",
+    description: "A Event Hub Management Web",
     image: "/projects/project2.png",
     tags: ["TailwindCSS", "NextAuth", "Next.js", "MongoDB", "Node", "JavaScript"],
     demoUrl: "https://event-hub-client-zeta.vercel.app/",
@@ -25,20 +28,16 @@ const projects = [
   {
     id: 3,
     title: "Car Rentel",
-    description:
-      "Full-featured e-commerce platform with user authentication",
+    description: "Full-featured e-commerce platform with user authentication",
     image: "/projects/project1.png",
     tags: ["React", "Node.js", "Firebase", "MongoDB", "FirebaseAuthToken"],
     demoUrl: "https://car-rental-8fde9.web.app/",
     githubUrl: "https://github.com/alifhossinsajjad/CarRental-Client-Side",
   },
-  // Duplicated projects for pagination demo
- 
   {
     id: 4,
     title: "Green Nest Mobile",
-    description:
-      "Mobile application for the plant store",
+    description: "Mobile application for the plant store",
     image: "/projects/project3.png",
     tags: ["React Native", "Firebase", "Redux"],
     demoUrl: "https://green-nest-five.vercel.app/",
@@ -50,6 +49,8 @@ const ITEMS_PER_PAGE = 3;
 
 export const ProjectsSection = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const containerRef = useRef(null);
+  const projectCardsRef = useRef([]);
 
   const totalPages = Math.ceil(projects.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -57,30 +58,78 @@ export const ProjectsSection = () => {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    // Optional: Scroll to top of section smoothly
     document.getElementById("projects").scrollIntoView({ behavior: "smooth" });
   };
 
+  const addToRefs = (el) => {
+    if (el && !projectCardsRef.current.includes(el)) {
+      projectCardsRef.current.push(el);
+    }
+  };
+
+  useEffect(() => {
+    // Re-initialize GSAP animations whenever currentProjects change (pagination)
+    const ctx = gsap.context(() => {
+      // Clear previous ScrollTriggers for these elements
+      ScrollTrigger.refresh();
+      
+      projectCardsRef.current.forEach((card, index) => {
+        gsap.fromTo(
+          card,
+          { 
+            opacity: 0, 
+            y: 100, 
+            rotationX: 30, 
+            scale: 0.9,
+            z: -100
+          },
+          {
+            opacity: 1,
+            y: 0,
+            rotationX: 0,
+            scale: 1,
+            z: 0,
+            duration: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 95%",
+              end: "top 65%",
+              scrub: 1,
+            },
+          }
+        );
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, [currentPage]); // re-run on page change
+
   return (
-    <section id="projects" className="py-24 px-4 relative">
-      <div className="container mx-auto max-w-5xl">
+    <section id="projects" className="py-14 px-4 relative" ref={containerRef}>
+      <div className="container mx-auto max-w-5xl" style={{ perspective: "1000px" }}>
         <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
           Featured <span className="text-primary"> Projects </span>
         </h2>
 
-        <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+        <p className="text-center text-muted-foreground mb-8 max-w-2xl mx-auto">
           Here are some of my recent projects. Each project was carefully
           crafted with attention to detail, performance, and user experience.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           <AnimatePresence mode="wait">
-            {currentProjects.map((project) => (
+            {currentProjects.map((project, index) => (
               <motion.div
                 key={project.id}
+                ref={(el) => {
+                  // Only track the current page elements, clear array on unmount/remount
+                  if (index === 0) projectCardsRef.current = [];
+                  addToRefs(el);
+                }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
+                exit={{ opacity: 0, y: -20, scale: 0.9 }}
                 transition={{ duration: 0.3 }}
                 className="group bg-card rounded-lg overflow-hidden shadow-xs card-hover flex flex-col"
               >
@@ -112,9 +161,9 @@ export const ProjectsSection = () => {
 
                 <div className="p-6 flex flex-col flex-grow">
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags.map((tag, index) => (
+                    {project.tags.map((tag, idx) => (
                       <span
-                        key={index}
+                        key={idx}
                         className="px-2 py-1 text-xs font-medium border rounded-full bg-secondary text-secondary-foreground"
                       >
                         {tag}
