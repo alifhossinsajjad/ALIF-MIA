@@ -61,11 +61,11 @@ export const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto md:mx-0 leading-relaxed"
           >
-            Software Engineer & Full-Stack MERN Developer.{" "}
+           Software Engineer & DevOps Enthusiast.{" "}
             <br className="hidden md:block" />
-            Turning complex ideas into{" "}
+            Building, automating, and scaling{" "}
             <span className="text-foreground font-semibold">
-              scalable digital masterpieces
+              robust digital infrastructure
             </span>
             .
           </motion.p>
